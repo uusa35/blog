@@ -7,7 +7,7 @@
                 <div class="col-md-12">
                     @if(isset($elements) && $elements->isNotEmpty())
                         @foreach($elements as $element)
-                            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="width: 70rem;">
                                 <div class="col p-4 d-flex flex-column position-static">
                                     <h3 class="mb-0">
                                         {{ str_limit($element->title,60,'..') }}
@@ -42,7 +42,7 @@
                                        class="stretched-link">{{ __('general.continue_reading') }}</a>
                                 </div>
                                 <div class="col-auto d-none d-lg-block">
-                                    <img src="{{ $element->image }}" class="img-thumbnail"/>
+                                    <img src="{{ $element->image }}" class="img-thumbnail" style="width: 200px"/>
                                 </div>
                             </div>
                         @endforeach

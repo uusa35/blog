@@ -35,13 +35,20 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
                         </a>
-
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             @if(auth()->user()->is_admin)
                                 <a class="dropdown-item" href="{{ route('backend.index') }}">
                                     {{ __('general.dashboard') }}
                                 </a>
+                            @else
+                                <a class="dropdown-item" href="{{ route('post.index') }}">
+                                    {{ __('general.posts') }}
+                                </a>
                             @endif
+                            <a class="dropdown-item" href="{{ route('post.create') }}">
+                                {{ __('general.create_post') }}
+                            </a>
+
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

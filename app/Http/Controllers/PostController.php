@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\PostViewed;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -15,7 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $elements = Post::where(['user_id' => auth()->id()])->simplePaginate(self::TAKE_MIN);
+        return view('post.index', compact('elements'));
     }
 
     /**
@@ -25,7 +27,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $elements = User::whereActive(true)->get();
+        return view('post.create', compact('elements'));
     }
 
     /**
@@ -36,7 +39,23 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = validator($request->all(), [
+            'user_id' => 'required|exists:users,id',
+            'title' => 'required|min:3|max:300',
+            'content' => 'required|min:3|max:1000'
+        ]);
+        if ($validate->fails()) {
+            return redirect()->back()->with('error', $validate->errors()->first());
+        }
+        $fileName = $request->image->store('public/images');
+        $element = Post::create($request->except('image', '_token'));
+        if ($element) {
+            $element->update([
+                'image' => str_replace('public/', '', $fileName)
+            ]);
+        }
+        return redirect()->back()->with('success', __('general.post_updated_successfully'));
+
     }
 
     /**
@@ -62,7 +81,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $element = Post::whereId($id)->first();
+        return view('post.edit', compact('element'));
     }
 
     /**
@@ -74,7 +94,25 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validate = validator($request->all(), [
+            'user_id' => 'required|exists:users,id',
+            'title' => 'required|min:3|max:300',
+            'content' => 'required|min:3|max:1000'
+        ]);
+        if ($validate->fails()) {
+            return redirect()->back()->with('error', $validate->errors()->first());
+        }
+        $element = Post::whereId($id)->first();
+        $element->update($request->except('image', '_token'));
+        if ($element) {
+            if ($request->hasFile('image')) {
+                $fileName = $request->image->store('public/images');
+                $element->update([
+                    'image' => str_replace('public/', '', $fileName)
+                ]);
+            }
+        }
+        return redirect()->back()->with('success', __('general.post_created_successfully'));
     }
 
     /**

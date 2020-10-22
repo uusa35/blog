@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $elements = Post::whereActive(true)->simplePaginate(self::TAKE_LESS);
+        $elements = Post::whereActive(true)->orderBy('id','desc')->simplePaginate(self::TAKE_LESS);
         return view('home', compact('elements'));
     }
 }

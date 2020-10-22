@@ -14,7 +14,7 @@ class DashBoardController extends Controller
      */
     public function index()
     {
-        $elements = Post::simplePaginate(self::TAKE_MIN);
+        $elements = Post::orderBy('id','desc')->simplePaginate(self::TAKE_MIN);
         return view('dashboard', compact('elements'));
     }
 

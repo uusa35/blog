@@ -3,11 +3,10 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            @include('nav_backend')
             <div class="row mb-2">
                 <div class="col-md-12">
                     @if(isset($elements) && $elements->isNotEmpty())
-                        <table class="table table-hover">
+                        <table class="table table-hover" style="width : 80rem;">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>

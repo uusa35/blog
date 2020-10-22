@@ -19,5 +19,9 @@ return [
     'user' => 'User',
     "posts" => 'Posts',
     'post' => 'post',
-    'views' => 'Views'
+    'views' => 'Views',
+    'posted_by' => "Posted By",
+    "create_post" => "Create New Post",
+    'post_created_successfully' => 'Post Created Successfully',
+    'post_created_successfully' => 'Post Updated Successfully'
 ];

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="card mb-3">
+            <div class="card mb-3" style="width: 80rem;">
                 <img src="{{ $element->image }}" class="card-img-top" alt="{{ $element->title }}"
                      style="max-height: 500px">
                 <div class="card-body">
@@ -12,7 +12,10 @@
                              alt="">
                         {{ $element->title }}</h5>
                     <div class="card-text row">
-                        <div class="col-6 text-left">
+                        <div class="col-3 text-left">
+                            <small class="text-muted">{{ __('general.posted_by') .' : ' .str_limit($element->user->name,'50') }}</small>
+                        </div>
+                        <div class="col-3 text-left">
                             <small class="text-muted">{{ $element->created_at->format('Y-m-d h:i A') }}</small>
                         </div>
                         <div class="col-6 text-right">

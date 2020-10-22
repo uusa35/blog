@@ -9,6 +9,7 @@ class Post extends Model
 {
     use HasFactory;
     protected $with = ['views'];
+    protected $guarded = [''];
 
     public function user()
     {
