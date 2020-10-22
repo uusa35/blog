@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="card mb-3" style="width: 80rem;">
-                <img src="{{ $element->image }}" class="card-img-top" alt="{{ $element->title }}"
+                <img src="{{ str_contains('http',$element->image) ? $element->image : asset($element->image) }}" class="card-img-top" alt="{{ $element->title }}"
                      style="max-height: 500px">
                 <div class="card-body">
                     <h5 class="card-title">
@@ -41,11 +41,23 @@
                             <h5 class="card-title">
                                 <img src="https://ui-avatars.com/api/name={{ $comment->user->name }}&background=0D8ABC&color=fff"
                                      alt=""/>
-                                {{ $comment->content }}
+                                {{ $comment->user->name }}
+                                @if($comment->user_id === auth()->id())
+                                    <small class="text-right"> - <a
+                                                href="{{ route('comment.edit', $comment->id) }}">{{ __('general.edit') }}</a>
+                                    </small>
+                                @endif
                             </h5>
-                            <p class="card-text  text-right">
-                                <small class="text-muted">{{ $element->created_at->format('Y-m-d h:iA') }}</small>
-                            </p>
+                            <div class="card-text  text-left">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <p>{{ $comment->content }}</p>
+                                    </div>
+                                    <div class="col-2">
+                                        <small class="text-muted text-right">{{ $element->created_at->format('Y-m-d h:i A') }}</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach

@@ -14,7 +14,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $elements = Comment::simplePaginate(self::TAKE_MIN);
+        $elements = Comment::orderby('id','desc')->simplePaginate(self::TAKE_MIN);
         return view('comment.index', compact('elements'));
     }
 
@@ -67,7 +67,8 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $element = Comment::whereId($id)->first();
+        return view('comment.edit', compact('element'));
     }
 
     /**
@@ -79,7 +80,17 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validate = validator($request->all(), [
+            'user_id' => 'required|exists:users,id',
+            'post_id' => 'required|exists:posts,id',
+            'content' => 'required|min:5|max:1000'
+        ]);
+        if ($validate->fails()) {
+            return redirect()->back()->with('error', $validate->errors()->first());
+        }
+        $element = Comment::whereId($id)->first();
+        $element->update($request->all());
+        return redirect()->route('post.show', $element->post_id)->with('success', __('general.comment_updated_successfully'));
     }
 
     /**
