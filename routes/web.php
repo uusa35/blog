@@ -20,7 +20,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::resource('backend', DashBoardController::class)->only(['index']);
-Route::resource('post', PostController::class)->only(['show', 'index', 'destroy']);
-Route::resource('comment', CommentController::class)->only(['store', 'index']);
+Route::resource('post', PostController::class)->only(['show', 'index']);
+Route::resource('comment', CommentController::class)->only(['store']);
+Route::group(['middleware' => ['auth', 'admin']], function () {
+    Route::resource('backend', DashBoardController::class)->only(['index']);
+    Route::resource('comment', CommentController::class)->only(['index']);
+});
+
 Auth::routes();
