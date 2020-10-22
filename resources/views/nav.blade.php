@@ -38,7 +38,7 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             @if(auth()->user()->is_admin)
-                                <a class="dropdown-item" href="{{ route('dashboard') }}">
+                                <a class="dropdown-item" href="{{ route('backend.index') }}">
                                     {{ __('general.dashboard') }}
                                 </a>
                             @endif

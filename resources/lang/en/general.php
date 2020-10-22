@@ -18,5 +18,6 @@ return [
     'blog' => 'Blog',
     'user' => 'User',
     "posts" => 'Posts',
-    'post' => 'post'
+    'post' => 'post',
+    'views' => 'Views'
 ];
