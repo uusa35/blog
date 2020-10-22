@@ -10,7 +10,7 @@
                             <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                 <div class="col p-4 d-flex flex-column position-static">
                                     <h3 class="mb-0">
-                                        {{ $element->title }}
+                                        {{ str_limit($element->title,60,'..') }}
                                     </h3>
                                     <div class="row border-bottom mb-3">
                                         <div class="col-6 mb-1 text-muted text-left">
@@ -37,7 +37,7 @@
                                             <path fill-rule="evenodd"
                                                   d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
                                         </svg>
-                                        {{ str_limit($element->content,500,'...') }}</p>
+                                        {{ str_limit($element->content,250,'...') }}</p>
                                     <a href="{{ route('post.show', $element->id) }}"
                                        class="stretched-link">{{ __('general.continue_reading') }}</a>
                                 </div>

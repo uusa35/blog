@@ -28,7 +28,7 @@
                                 <tr>
                                     <th scope="row">{{ $element->id }}</th>
                                     <td><a href="{{ route('post.show', $element->id) }}">{{ str_limit($element->title,25) }}</a></td>
-                                    <td>{{ str_limit($element->content,120,'...') }}</td>
+                                    <td>{{ str_limit($element->content,80,'...') }}</td>
                                     <td><img src="{{ $element->image }}" class="img-responsive" style="width: 50px;"/>
                                     </td>
                                     <td>{{ $element->viewsCount }} </td>
