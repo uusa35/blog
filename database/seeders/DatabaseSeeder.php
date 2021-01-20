@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(10)->create()->each(function ($u) {
             if ($u->id === 1) {
-                $u->update(['is_admin' => true, 'email' => 'admin@test.com']);
+                $u->update(['is_admin' => true, 'email' => 'admin@admin.com']);
             }
         });
-        Post::factory(200)->create();
-        Comment::factory(400)->create();
+        Post::factory(150)->create();
+        Comment::factory(350)->create();
     }
 }

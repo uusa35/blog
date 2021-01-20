@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Events\PostViewed;
@@ -9,120 +8,74 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $elements = Post::where(['user_id' => auth()->id()])->simplePaginate(self::TAKE_MIN);
-        return view('post.index', compact('elements'));
+        $posts = Post::where(['user_id' => auth()->id()])->simplePaginate(20);
+        return view('post.index', compact('posts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $elements = User::whereActive(true)->get();
-        return view('post.create', compact('elements'));
+        $users = User::all();
+        return view('post.create', compact('users'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validate = validator($request->all(), [
             'user_id' => 'required|exists:users,id',
             'title' => 'required|min:3|max:300',
-            'content' => 'required|min:3|max:1000'
+            'content' => 'required|min:3|max:10000'
         ]);
         if ($validate->fails()) {
             return redirect()->back()->with('error', $validate->errors()->first());
         }
         $fileName = $request->image->store('public/images');
-        $element = Post::create($request->except('image', '_token'));
-        if ($element) {
-            $element->update([
+        $post = Post::create($request->except('image', '_token'));
+        if ($post) {
+            $post->update([
                 'image' => str_replace('public/', '', $fileName)
             ]);
         }
-        return redirect()->back()->with('success', __('general.post_updated_successfully'));
+        return redirect()->back()->with('success', __('general.post_created_successfully'));
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        $element = Post::whereId($id)->with('user', 'views')->with(['comments' => function ($q) {
-            return $q->where(['active' => true])->with('user');
+        $post = Post::whereId($id)->with('user', 'views')->with(['comments' => function ($q) {
+            return $q->has('user')->with('user');
         }])->first();
-        event(new PostViewed($element));
-        return view('post.show', compact('element'));
+        event(new PostViewed($post));
+        return view('post.show', compact('post'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $element = Post::whereId($id)->first();
-        return view('post.edit', compact('element'));
+        $post = Post::whereId($id)->first();
+        return view('post.edit', compact('post'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $validate = validator($request->all(), [
             'user_id' => 'required|exists:users,id',
             'title' => 'required|min:3|max:300',
-            'content' => 'required|min:3|max:1000'
+            'content' => 'required|min:3|max:10000'
         ]);
         if ($validate->fails()) {
             return redirect()->back()->with('error', $validate->errors()->first());
         }
-        $element = Post::whereId($id)->first();
-        $element->update($request->except('image', '_token'));
-        if ($element) {
+        $post = Post::whereId($id)->first();
+        $post->update($request->except('image', '_token'));
+        if ($post) {
             if ($request->hasFile('image')) {
                 $fileName = $request->image->store('public/images');
-                $element->update([
+                $post->update([
                     'image' => str_replace('public/', '', $fileName)
                 ]);
             }
         }
-        return redirect()->back()->with('success', __('general.post_created_successfully'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->back()->with('success', __('general.post_updated_successfully'));
     }
 }

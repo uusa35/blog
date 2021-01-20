@@ -7,15 +7,9 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        $elements = Post::whereActive(true)->orderBy('id','desc')->simplePaginate(self::TAKE_LESS);
-        return view('home', compact('elements'));
+        $posts = Post::orderBy('id','desc')->simplePaginate(5);
+        return view('home', compact('posts'));
     }
 }

@@ -8,9 +8,16 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+<!-- Scripts -->
+    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script>
+        window.User = {
+            user_id: '{{ auth()->user()->id  ?? null}}',
+            api_token: '{{ auth()->user()->api_token ?? null }}',
+            avatar: '{{ auth()->user()->avatar  ?? null}}',
+            csrfToken: '{{ csrf_token() }}',
+        }
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,14 +26,14 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
-    <div id="app">
-        @include('nav')
-        @include('notification')
+<body class="bg">
+<div>
+    @include('nav')
+    @include('notification')
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+    <main class="py-4" id="app">
+        @yield('content')
+    </main>
+</div>
 </body>
 </html>

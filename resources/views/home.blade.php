@@ -2,15 +2,20 @@
 
 @section('content')
     <div class="container">
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                {{ $posts->render() }}
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="row mb-2">
                 <div class="col-md-12">
-                    @if(isset($elements) && $elements->isNotEmpty())
-                        @foreach($elements as $element)
-                            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="width: 70rem;">
+                    @if(isset($posts) && $posts->isNotEmpty())
+                        @foreach($posts as $element)
+                            <div class="row no-gutters bg-white border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative post-widget">
                                 <div class="col p-4 d-flex flex-column position-static">
                                     <h3 class="mb-0">
-                                        {{ str_limit($element->title,60,'..') }}
+                                        {{ str_limit($element->subject,60,'..') }}
                                     </h3>
                                     <div class="row border-bottom mb-3">
                                         <div class="col-6 mb-1 text-muted text-left">
@@ -19,7 +24,7 @@
                                                 <path fill-rule="evenodd"
                                                       d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l.601.602a.5.5 0 0 1-.707.708l-.746-.746A6.97 6.97 0 0 1 8 16a6.97 6.97 0 0 1-3.422-.892l-.746.746a.5.5 0 0 1-.707-.708l.602-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zM.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM11.613 1.86a2.5 2.5 0 1 1 3.527 3.527 8.035 8.035 0 0 0-3.527-3.527zM8.5 5.5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5z"/>
                                             </svg>
-                                            {{ $element->created_at->format('Y-m-d h:i A') }}</div>
+                                            {{ $element->created_at->diffForHumans() }}</div>
                                         <div class="col-6 mb-1 text-muted text-right">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye"
                                                  fill="currentColor"
@@ -39,7 +44,7 @@
                                         </svg>
                                         {{ str_limit($element->content,250,'...') }}</p>
                                     <a href="{{ route('post.show', $element->id) }}"
-                                       class="stretched-link">{{ __('general.continue_reading') }}</a>
+                                       class="stretched-link">{{ __('general.read_more') }}</a>
                                 </div>
                                 <div class="col-auto d-none d-lg-block">
                                     <img src="{{ $element->image }}" class="img-thumbnail" style="width: 200px"/>
@@ -47,15 +52,15 @@
                             </div>
                         @endforeach
                         <div class="col-lg-12">
-                            {{ $elements->render() }}
+                            {{ $posts->render() }}
                         </div>
                     @else
-                            <div class="jumbotron p-4 p-md-5 text-white rounded bg-danger">
-                                <div class="col-md-12 px-0">
-                                    <h1 class="display-4 font-italic">{{ __('general.no_posts') }}</h1>
-                                    <p class="lead my-3">No Posts to preview.</p>
-                                </div>
+                        <div class="jumbotron p-4 p-md-5 text-white rounded bg-danger">
+                            <div class="col-md-12 px-0">
+                                <h1 class="display-4 font-italic">{{ __('general.no_posts') }}</h1>
+                                <p class="lead my-3">No Posts to preview.</p>
                             </div>
+                        </div>
                     @endif
                 </div>
             </div>

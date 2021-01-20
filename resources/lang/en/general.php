@@ -1,6 +1,7 @@
 <?php
 return [
     'no_posts' => 'No Posts',
+    'read_more' => "Read more...",
     'home' => "Home",
     'continue_reading' => 'Continue Reading',
     "sys_message" => "System Message",
@@ -23,7 +24,8 @@ return [
     'edit' => 'Edit',
     'posted_by' => "Posted By",
     "create_post" => "Create New Post",
+    'post_image' => 'Post Image',
     'post_created_successfully' => 'Post Created Successfully.',
-    'post_created_successfully' => 'Post Updated Successfully.',
+    'post_updated_successfully' => 'Post Updated Successfully.',
     'comment_updated_successfully' => "Comment updated Successfully."
 ];

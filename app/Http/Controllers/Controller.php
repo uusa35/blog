@@ -10,7 +10,4 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    const TAKE_MID = 100;
-    const TAKE_MIN = 50;
-    const TAKE_LESS = 5;
 }

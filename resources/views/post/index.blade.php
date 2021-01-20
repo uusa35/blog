@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="row mb-2">
                 <div class="col-md-12">
-                    @if(isset($elements) && $elements->isNotEmpty())
+                    @if(isset($posts) && $posts->isNotEmpty())
                         <table class="table table-hover" style="width : 80rem;">
                             <thead>
                             <tr>
@@ -28,7 +28,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($elements as $element)
+                            @foreach($posts as $element)
                                 <tr>
                                     <th scope="row">{{ $element->id }}</th>
                                     <td>
@@ -49,7 +49,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $elements->render() }}
+                        {{ $posts->render() }}
                     @else
                         <div class="jumbotron p-4 p-md-5 text-white rounded bg-danger">
                             <div class="col-md-6 px-0">

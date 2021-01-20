@@ -23,11 +23,10 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->sentence(10),
-            'content' => $this->faker->paragraph(100),
-            'image' => 'https://source.unsplash.com/random/200x200?sig=1'.rand(1,99),
+            'title' => $this->faker->sentence(12),
+            'content' => $this->faker->paragraph(70),
+            'image' => 'https://source.unsplash.com/random/200x200?sig=1'.rand(1,90),
             'user_id' => User::all()->random()->id,
-            'active' => $this->faker->boolean,
         ];
     }
 }

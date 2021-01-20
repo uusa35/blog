@@ -7,8 +7,8 @@
             <div class="d-flex flex-column" style="width: 100rem">
                 <div class="row mb-2">
                     <div class="col-md-12">
-                        @if(isset($elements) && $elements->isNotEmpty())
-                            <table class="table table-hover" style="width : 80rem;">
+                        @if(isset($comments) && $comments->isNotEmpty())
+                            <table class="table table-hover bg-white" style="width : 80rem;">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -19,13 +19,13 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($elements as $element)
+                                @foreach($comments as $element)
                                     <tr>
                                         <th scope="row">{{ $element->id }}</th>
                                         <td>{{ str_limit($element->user->name,25) }}</td>
                                         <td>{{ str_limit($element->content,200,'...') }}</td>
                                         <td><a href="{{ route('post.show', $element->post->id) }}">
-                                                {{ str_limit($element->post->content,100,'...') }}
+                                                {{ str_limit($element->post->title,100,'...') }}
                                             </a>
                                         </td>
                                         <td>
@@ -43,17 +43,12 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{ $elements->render() }}
+                            {{ $comments->render() }}
                         @else
                             <div class="jumbotron p-4 p-md-5 text-white rounded bg-danger">
                                 <div class="col-md-6 px-0">
                                     <h1 class="display-4 font-italic">{{ __('general.no_posts') }}</h1>
-                                    <p class="lead my-3">Multiple lines of text that form the lede, informing new
-                                        readers
-                                        quickly and efficiently about what’s most interesting in this post’s
-                                        contents.</p>
-                                    <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue
-                                            reading...</a></p>
+                                    <p class="lead my-3">No Posts.</p>
                                 </div>
                             </div>
                         @endif

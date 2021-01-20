@@ -1,6 +1,7 @@
 <?php
 return [
     'no_posts' => 'لا توجد مقالات',
+    'read_more' => "المزيد..",
     'home' => 'الرئيسية',
     'continue_reading' => 'اقرا المزيد',
     "warning" => "رسالة النظام",
